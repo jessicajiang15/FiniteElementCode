@@ -1,0 +1,105 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3092,         97]
+NotebookOptionsPosition[      2707,         83]
+NotebookOutlinePosition[      3046,         98]
+CellTagsIndexPosition[      3003,         95]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Distance", "=", "2"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Energy", "=", 
+   RowBox[{"4", "*", 
+    FractionBox["c", 
+     SuperscriptBox["Distance", "2"]]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[CapitalLambda]", "[", "x_", "]"}], "=", 
+   RowBox[{
+    RowBox[{"0.3127477", "*", "x"}], "-", 
+    RowBox[{"0.0231669", "*", 
+     SuperscriptBox["x", "2"]}], "-", 
+    RowBox[{"0.0005110", " ", 
+     SuperscriptBox["x", "3"]}], "-", 
+    RowBox[{"0.0000045", " ", 
+     SuperscriptBox["x", "4"]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"R", "=", "20"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.864470147652273*^9, 3.8644701730739393`*^9}, {
+  3.864470324415565*^9, 
+  3.864470325502541*^9}},ExpressionUUID->"323dcdaf-c0d7-468a-92e1-\
+3cfdca38d4d4"],
+
+Cell[BoxData[
+ RowBox[{"Rsol", "=", 
+  RowBox[{"NDSolve", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           SuperscriptBox["\[Xi]", "2"], "-", "1"}], ")"}], 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"g", "[", "\[Xi]", "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"\[Xi]", ",", "2"}], "}"}]}], "]"}]}], "+", 
+        RowBox[{"2", "\[Xi]", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"g", "[", "\[Xi]", "]"}], ",", "\[Xi]"}], "]"}]}], "+", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", "*", "Distance", "*", " ", "\[Xi]"}], " ", "+", 
+           RowBox[{"c", " ", 
+            SuperscriptBox["\[Xi]", "2"]}], "-", 
+           RowBox[{"\[CapitalLambda]", "[", "c", "]"}]}], ")"}], 
+         RowBox[{"g", "[", "\[Xi]", "]"}]}]}], "\[Equal]", "0"}], ",", 
+      RowBox[{
+       RowBox[{"g", "[", "1.001", "]"}], "\[Equal]", "1"}], ",", 
+      RowBox[{
+       RowBox[{"g", "[", "R", "]"}], "\[Equal]", "0"}]}], "}"}], ",", "g", 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"\[Xi]", ",", "1.000001", ",", "R"}], "}"}]}], "]"}]}]], "Input",\
+ExpressionUUID->"1fb97a1f-a9c3-4519-bd63-63b81d8b90ed"]
+},
+WindowSize->{808, 747},
+WindowMargins->{{Automatic, 233}, {-36, Automatic}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 851, 23, 133, "Input",ExpressionUUID->"323dcdaf-c0d7-468a-92e1-3cfdca38d4d4"],
+Cell[1412, 45, 1291, 36, 56, "Input",ExpressionUUID->"1fb97a1f-a9c3-4519-bd63-63b81d8b90ed"]
+}
+]
+*)
+
