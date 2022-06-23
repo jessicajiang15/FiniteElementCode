@@ -4,6 +4,7 @@ import scipy
 import scipy.integrate as integrate
 import numpy.linalg as linalg
 from multipledispatch import dispatch
+from matplotlib.colors import LightSource
 
 class Point:
     def __init__(self, x, y):
