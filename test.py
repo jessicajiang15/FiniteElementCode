@@ -62,6 +62,7 @@ class FiniteElement:
         
         self.triangles=[];
         self.center=center
+        self.config=config
         
         if(config==0):
         
@@ -158,7 +159,7 @@ class FEM:
         for m in range(0,self.M-1):
             #ignore the last row
             for n in range(0,self.N-1):
-                config=0 if n%2==0 else 1
+                config=(n%2+m%2)%2==0
                 finiteElements[m, n]=FiniteElement(self.minX+n*self.deltaX, self.maxY-m*self.deltaY, self.deltaX, self.deltaY, config)
         return finiteElements
     
@@ -382,13 +383,13 @@ class FEM:
         ax.scatter(xs,ys,function, facecolors=new_img);
         plt.savefig("3dplot, N: "+str(self.N)+", M: "+str(self.M)+".png")
         
-    def graphSlice(self, n):
+    def graphSlice(self, n, func):
         plt.clf();
         fsols=finiteElement.extractSols(self.sols)
         xy=finiteElement.getXYCoords()
         y=xy[1][(n),:][0]
         ys=(fsols[(M-1)*N+c] for c in range(N+1))
-        theys=[Test.erf_solution(x, y) for x in xy[0][(M-1),:]]
+        theys=[func(x, y) for x in xy[0][(M-1),:]]
         plt.scatter(xy[0][n,:], fsols[n,:],s=10)
         plt.scatter(xy[0][n,:],theys, s=10,c="orange")
         plt.savefig("2dplot, N: "+str(self.N)+", M: "+str(self.M)+", y: "+str(y)+".png")
@@ -399,7 +400,8 @@ class FEM:
 
         output=np.array([[x, y] for x in xs for y in ys])
         function=np.array([func(p[0], p[1]) for p in output])
-        pass
+        theSols=self.extractSols(self.sols);
+        return np.mean((theSols-function)**2)
         
 class Test:
     def __init__(self):
@@ -442,10 +444,15 @@ class Test:
             for c in range(cols):
                 temp[r, c]=func(minX+deltaX*c, maxY-deltaY*r)
         return temp
+    
     @staticmethod    
     def computeGradientMatrix(func, minX, minY, maxX, maxY, deltaX, deltaY):
         values=Test.createArrayOfValues(func, minX, minY, maxX, maxY, deltaX, deltaY)
         return np.gradient(values, deltaX)
+    @staticmethod
+    def hydrogen_1s_solution(x, y):
+        r=np.sqrt(x**2+y**2)
+        return (1/(4*np.pi*eps*a**2))*(a**2/(np.sqrt(x**2+y**2))-(a**2/(np.sqrt(x**2+y**2))-a)*np.exp(-2*(np.sqrt(x**2+y**2))/a)) if r>0 else (1/(4*np.pi*eps*a**2))*(-a**2/(np.sqrt(x**2+y**2))-(-a**2/np.sqrt(x**2+y**2)-a)*np.exp(2*np.sqrt(x**2+y**2)/a))
         
 eps=1
 
@@ -454,8 +461,8 @@ maxX=5
 minY=-5
 maxY=5
 
-N=1000
-M=1000
+N=500
+M=500
 sigma=1
 a=1
 
@@ -468,7 +475,6 @@ def electronDensity(x, y):
 
 #self, N, M, minX, maxX, minY, maxY, electronDensity, eps, boundaryCondition
 finiteElement=FEM(N, M, minX, maxX, minY, maxY, electronDensity, eps, boundaryCondition)
-
 finiteElement.graphResults()
-finiteElement.graphSlice(M//2)
-finiteElement.graphSlice(M-1)
+finiteElement.graphSlice(M//2, Test.erf_solution)
+finiteElement.graphSlice(M-1, Test.erf_solution)
