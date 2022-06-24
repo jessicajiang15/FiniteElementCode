@@ -10,14 +10,16 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      3092,         97]
-NotebookOptionsPosition[      2707,         83]
-NotebookOutlinePosition[      3046,         98]
-CellTagsIndexPosition[      3003,         95]
+NotebookDataLength[     11616,        275]
+NotebookOptionsPosition[     10308,        248]
+NotebookOutlinePosition[     10647,        263]
+CellTagsIndexPosition[     10604,        260]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
 Cell[BoxData[{
  RowBox[{
   RowBox[{"Distance", "=", "2"}], ";"}], "\[IndentingNewLine]", 
@@ -39,47 +41,210 @@ Cell[BoxData[{
      SuperscriptBox["x", "4"]}]}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{"R", "=", "20"}], "\[IndentingNewLine]"}], "Input",
  CellChangeTimes->{{3.864470147652273*^9, 3.8644701730739393`*^9}, {
-  3.864470324415565*^9, 
-  3.864470325502541*^9}},ExpressionUUID->"323dcdaf-c0d7-468a-92e1-\
-3cfdca38d4d4"],
+  3.864470324415565*^9, 3.864470325502541*^9}},
+ CellLabel->"In[48]:=",ExpressionUUID->"323dcdaf-c0d7-468a-92e1-3cfdca38d4d4"],
+
+Cell[BoxData["20"], "Output",
+ CellChangeTimes->{3.864470960743126*^9},
+ CellLabel->"Out[51]=",ExpressionUUID->"d07b390d-e0ef-4237-a251-e1398cc2d715"]
+}, Open  ]],
+
+Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"Rsol", "=", 
-  RowBox[{"NDSolve", "[", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"Evaluate", "[", 
       RowBox[{
        RowBox[{
-        RowBox[{
-         RowBox[{"(", 
-          RowBox[{
-           SuperscriptBox["\[Xi]", "2"], "-", "1"}], ")"}], 
-         RowBox[{"D", "[", 
-          RowBox[{
-           RowBox[{"g", "[", "\[Xi]", "]"}], ",", 
-           RowBox[{"{", 
-            RowBox[{"\[Xi]", ",", "2"}], "}"}]}], "]"}]}], "+", 
-        RowBox[{"2", "\[Xi]", " ", 
-         RowBox[{"D", "[", 
-          RowBox[{
-           RowBox[{"g", "[", "\[Xi]", "]"}], ",", "\[Xi]"}], "]"}]}], "+", 
-        RowBox[{
-         RowBox[{"(", 
-          RowBox[{
-           RowBox[{"2", "*", "Distance", "*", " ", "\[Xi]"}], " ", "+", 
-           RowBox[{"c", " ", 
-            SuperscriptBox["\[Xi]", "2"]}], "-", 
-           RowBox[{"\[CapitalLambda]", "[", "c", "]"}]}], ")"}], 
-         RowBox[{"g", "[", "\[Xi]", "]"}]}]}], "\[Equal]", "0"}], ",", 
-      RowBox[{
-       RowBox[{"g", "[", "1.001", "]"}], "\[Equal]", "1"}], ",", 
-      RowBox[{
-       RowBox[{"g", "[", "R", "]"}], "\[Equal]", "0"}]}], "}"}], ",", "g", 
-    ",", 
-    RowBox[{"{", 
-     RowBox[{"\[Xi]", ",", "1.000001", ",", "R"}], "}"}]}], "]"}]}]], "Input",\
-ExpressionUUID->"1fb97a1f-a9c3-4519-bd63-63b81d8b90ed"]
+        RowBox[{"g", "[", "\[Xi]", "]"}], "/.", 
+        RowBox[{"NDSolve", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 SuperscriptBox["\[Xi]", "2"], "-", "1"}], ")"}], 
+               RowBox[{"D", "[", 
+                RowBox[{
+                 RowBox[{"g", "[", "\[Xi]", "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"\[Xi]", ",", "2"}], "}"}]}], "]"}]}], "+", 
+              RowBox[{"2", "\[Xi]", " ", 
+               RowBox[{"D", "[", 
+                RowBox[{
+                 RowBox[{"g", "[", "\[Xi]", "]"}], ",", "\[Xi]"}], "]"}]}], 
+              "+", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"2", "*", "Distance", "*", " ", "\[Xi]"}], " ", "+", 
+                 
+                 RowBox[{"c", " ", 
+                  SuperscriptBox["\[Xi]", "2"]}], "-", 
+                 RowBox[{"\[CapitalLambda]", "[", "c", "]"}]}], ")"}], 
+               RowBox[{"g", "[", "\[Xi]", "]"}]}]}], "\[Equal]", "0"}], ",", 
+            RowBox[{
+             RowBox[{"g", "[", "1.001", "]"}], "\[Equal]", "1"}], ",", 
+            RowBox[{
+             RowBox[{"g", "[", "R", "]"}], "\[Equal]", "0"}]}], "}"}], ",", 
+          "g", ",", 
+          RowBox[{"{", 
+           RowBox[{"\[Xi]", ",", "1.000001", ",", "R"}], "}"}]}], "]"}]}], 
+       ",", 
+       RowBox[{"{", 
+        RowBox[{"c", ",", 
+         RowBox[{"-", "10"}], ",", 
+         RowBox[{"-", "0.1"}]}], "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Xi]", ",", "1.000001", ",", "R"}], "}"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"c", ",", 
+     RowBox[{"-", "10"}], ",", 
+     RowBox[{"-", "0.1"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.864470800797509*^9, 3.864470826835993*^9}, {
+  3.864470912778832*^9, 3.86447095589177*^9}},
+ CellLabel->"In[52]:=",ExpressionUUID->"1fb97a1f-a9c3-4519-bd63-63b81d8b90ed"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`c$$ = -10, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`c$$], -10, -0.1}}, Typeset`size$$ = {
+    425., {49.642578125, 24.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`c$25586$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`c$$ = -10}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`c$$, $CellContext`c$25586$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Plot[
+        Evaluate[
+         ReplaceAll[
+          $CellContext`g[$CellContext`\[Xi]], 
+          NDSolve[{($CellContext`\[Xi]^2 - 1) D[
+                $CellContext`g[$CellContext`\[Xi]], {$CellContext`\[Xi], 2}] + 
+             2 $CellContext`\[Xi] D[
+                $CellContext`g[$CellContext`\[Xi]], $CellContext`\[Xi]] + (
+               2 $CellContext`Distance $CellContext`\[Xi] + $CellContext`c$$ \
+$CellContext`\[Xi]^2 - $CellContext`\[CapitalLambda][$CellContext`c$$]) \
+$CellContext`g[$CellContext`\[Xi]] == 0, $CellContext`g[1.001] == 
+            1, $CellContext`g[$CellContext`R] == 
+            0}, $CellContext`g, {$CellContext`\[Xi], 
+            1.000001, $CellContext`R}]], {$CellContext`c$$, -10, -0.1}], \
+{$CellContext`\[Xi], 1.000001, $CellContext`R}], 
+      "Specifications" :> {{$CellContext`c$$, -10, -0.1}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{470., {80., 86.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.864470962403254*^9},
+ CellLabel->"Out[52]=",ExpressionUUID->"3390b3ab-d0f3-4d07-9232-e29b98d9c68c"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "NDSolve","bvluc",
+   "\"The equations derived from the boundary conditions are numerically \
+ill-conditioned. The boundary conditions may not be sufficient to uniquely \
+define a solution. If a solution is computed, it may match the boundary \
+conditions poorly.\"",2,53,6,30155131544394666710,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.864470963234605*^9},
+ CellLabel->"",ExpressionUUID->"9ba3c09c-070a-445c-875d-79f1330e2f2a"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "NDSolve","berr",
+   "\"The scaled boundary value residual error of \
+\\!\\(\\*RowBox[{\\\"2.1649257378428586`*^13\\\"}]\\) indicates that the \
+boundary values are not satisfied to specified tolerances. Returning the best \
+solution found.\"",2,53,7,30155131544394666710,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.864470963312621*^9},
+ CellLabel->"",ExpressionUUID->"87cf7cc2-d070-4bc6-8bf4-21488d7dfabd"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Plot","nonopt",
+   "\"Options expected (instead of \\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"\
+\[Xi]\\\", \\\",\\\", \\\"1.000001`\\\", \\\",\\\", \\\"R\\\"}], \
+\\\"}\\\"}]\\)) beyond position \\!\\(\\*RowBox[{\\\"2\\\"}]\\) in \
+\\!\\(\\*RowBox[{\\\"Plot\\\", \\\"[\\\", RowBox[{RowBox[{\\\"{\\\", RowBox[{\
+\\\"\[LeftSkeleton]\\\", \\\"1\\\", \\\"\[RightSkeleton]\\\"}], \\\"}\\\"}], \
+\\\",\\\", RowBox[{\\\"{\\\", RowBox[{RowBox[{\\\"-\\\", \\\"10\\\"}], \
+\\\",\\\", RowBox[{\\\"-\\\", \\\"10\\\"}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.1`\\\"}]}], \\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{\\\"\[Xi]\\\", \\\",\\\", \\\"1.000001`\\\", \\\",\\\", \\\"R\\\"}], \
+\\\"}\\\"}]}], \\\"]\\\"}]\\). An option must be a rule or a list of \
+rules.\"",2,53,8,30155131544394666710,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.8644709633236647`*^9},
+ CellLabel->"",ExpressionUUID->"edf3290c-2a85-4db6-846f-be4acb214543"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "NDSolve","bvluc",
+   "\"The equations derived from the boundary conditions are numerically \
+ill-conditioned. The boundary conditions may not be sufficient to uniquely \
+define a solution. If a solution is computed, it may match the boundary \
+conditions poorly.\"",2,53,9,30155131544394666710,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.864470966933782*^9},
+ CellLabel->"",ExpressionUUID->"fe505fe5-26bf-49e8-97a0-42585dcd20d0"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "NDSolve","berr",
+   "\"The scaled boundary value residual error of \
+\\!\\(\\*RowBox[{\\\"2.1649257378428586`*^13\\\"}]\\) indicates that the \
+boundary values are not satisfied to specified tolerances. Returning the best \
+solution found.\"",2,53,10,30155131544394666710,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.8644709670078573`*^9},
+ CellLabel->"",ExpressionUUID->"b72b95bf-a6c6-4407-98a0-f61500a1b888"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Plot","nonopt",
+   "\"Options expected (instead of \\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"\
+\[Xi]\\\", \\\",\\\", \\\"1.000001`\\\", \\\",\\\", \\\"R\\\"}], \
+\\\"}\\\"}]\\)) beyond position \\!\\(\\*RowBox[{\\\"2\\\"}]\\) in \
+\\!\\(\\*RowBox[{\\\"Plot\\\", \\\"[\\\", RowBox[{RowBox[{\\\"{\\\", RowBox[{\
+\\\"\[LeftSkeleton]\\\", \\\"1\\\", \\\"\[RightSkeleton]\\\"}], \\\"}\\\"}], \
+\\\",\\\", RowBox[{\\\"{\\\", RowBox[{RowBox[{\\\"-\\\", \\\"10\\\"}], \
+\\\",\\\", RowBox[{\\\"-\\\", \\\"10\\\"}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.1`\\\"}]}], \\\"}\\\"}], \\\",\\\", RowBox[{\\\"{\\\", \
+RowBox[{\\\"\[Xi]\\\", \\\",\\\", \\\"1.000001`\\\", \\\",\\\", \\\"R\\\"}], \
+\\\"}\\\"}]}], \\\"]\\\"}]\\). An option must be a rule or a list of \
+rules.\"",2,53,11,30155131544394666710,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.864470967024518*^9},
+ CellLabel->"",ExpressionUUID->"4fe1487b-c43c-4256-87f8-5290f4686635"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.864470891268222*^9, 
+  3.864470957779333*^9},ExpressionUUID->"cb27804c-c184-4ff2-95e1-\
+9a3ca0e8c7e8"]
 },
 WindowSize->{808, 747},
 WindowMargins->{{Automatic, 233}, {-36, Automatic}},
@@ -97,8 +262,21 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 851, 23, 133, "Input",ExpressionUUID->"323dcdaf-c0d7-468a-92e1-3cfdca38d4d4"],
-Cell[1412, 45, 1291, 36, 56, "Input",ExpressionUUID->"1fb97a1f-a9c3-4519-bd63-63b81d8b90ed"]
+Cell[CellGroupData[{
+Cell[580, 22, 870, 22, 133, "Input",ExpressionUUID->"323dcdaf-c0d7-468a-92e1-3cfdca38d4d4"],
+Cell[1453, 46, 150, 2, 34, "Output",ExpressionUUID->"d07b390d-e0ef-4237-a251-e1398cc2d715"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1640, 53, 2193, 58, 169, "Input",ExpressionUUID->"1fb97a1f-a9c3-4519-bd63-63b81d8b90ed"],
+Cell[3836, 113, 2405, 47, 185, "Output",ExpressionUUID->"3390b3ab-d0f3-4d07-9232-e29b98d9c68c"],
+Cell[6244, 162, 489, 9, 42, "Message",ExpressionUUID->"9ba3c09c-070a-445c-875d-79f1330e2f2a"],
+Cell[6736, 173, 466, 9, 42, "Message",ExpressionUUID->"87cf7cc2-d070-4bc6-8bf4-21488d7dfabd"],
+Cell[7205, 184, 984, 16, 42, "Message",ExpressionUUID->"edf3290c-2a85-4db6-846f-be4acb214543"],
+Cell[8192, 202, 489, 9, 42, "Message",ExpressionUUID->"fe505fe5-26bf-49e8-97a0-42585dcd20d0"],
+Cell[8684, 213, 469, 9, 42, "Message",ExpressionUUID->"b72b95bf-a6c6-4407-98a0-f61500a1b888"],
+Cell[9156, 224, 983, 16, 42, "Message",ExpressionUUID->"4fe1487b-c43c-4256-87f8-5290f4686635"]
+}, Open  ]],
+Cell[10154, 243, 150, 3, 30, "Input",ExpressionUUID->"cb27804c-c184-4ff2-95e1-9a3ca0e8c7e8"]
 }
 ]
 *)

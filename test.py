@@ -356,6 +356,7 @@ class FEM:
         return self.turnIntoGraphable(sols)
     
     def graphResults(self):
+        plt.clf();
         sols=self.solveSystem()
         graphData=self.turnIntoGraphable(sols)
         xs = graphData[0][:,0]
@@ -379,18 +380,27 @@ class FEM:
 
         # Create the SCATTER() plot 
         ax.scatter(xs,ys,function, facecolors=new_img);
-        plt.savefig("3dplot2.png")
+        plt.savefig("3dplot, N: "+str(self.N)+", M: "+str(self.M)+".png")
         
     def graphSlice(self, n):
+        plt.clf();
         fsols=finiteElement.extractSols(self.sols)
         xy=finiteElement.getXYCoords()
         y=xy[1][(n),:][0]
         ys=(fsols[(M-1)*N+c] for c in range(N+1))
         theys=[Test.erf_solution(x, y) for x in xy[0][(M-1),:]]
-        plt.scatter(xy[0][(n),:], fsols[n,:])
-        plt.scatter(xy[0][n,:],theys, c="orange")
-        plt.savefig("2dplot2.png")
-    
+        plt.scatter(xy[0][n,:], fsols[n,:],s=10)
+        plt.scatter(xy[0][n,:],theys, s=10,c="orange")
+        plt.savefig("2dplot, N: "+str(self.N)+", M: "+str(self.M)+", y: "+str(y)+".png")
+        
+    def computeError(self, func):
+        xs = np.linspace(startX, endX,num=self.N+1,axis=0)
+        ys = np.linspace(startY, endY,num=self.M+1,axis=0)
+
+        output=np.array([[x, y] for x in xs for y in ys])
+        function=np.array([func(p[0], p[1]) for p in output])
+        pass
+        
 class Test:
     def __init__(self):
         pass
@@ -436,7 +446,7 @@ class Test:
     def computeGradientMatrix(func, minX, minY, maxX, maxY, deltaX, deltaY):
         values=Test.createArrayOfValues(func, minX, minY, maxX, maxY, deltaX, deltaY)
         return np.gradient(values, deltaX)
-
+        
 eps=1
 
 minX=-5
@@ -444,8 +454,8 @@ maxX=5
 minY=-5
 maxY=5
 
-N=10
-M=10
+N=100
+M=100
 sigma=1
 a=1
 
