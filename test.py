@@ -454,8 +454,8 @@ maxX=5
 minY=-5
 maxY=5
 
-N=1000
-M=1000
+N=10
+M=10
 sigma=1
 a=1
 
