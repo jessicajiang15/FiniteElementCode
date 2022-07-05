@@ -587,5 +587,5 @@ def electronDensity_hydrogen1s(x,y):
 finiteElement=FEM(N, M, minX, maxX, minY, maxY, electronDensity, eps, boundaryCondition,electron_density)
 
 finiteElement.graphResults()
-Test.plot(minX,maxX,minY,maxY,100,Test.erf_solution)
-Test.plot(minX,maxX,minY,maxY,100,electronDensity)
+finiteElement.graphSlice(M//2, Test.erf_solution)
+finiteElement.graphSlice(M-1, Test.erf_solution)
