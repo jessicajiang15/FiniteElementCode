@@ -13,7 +13,6 @@ import timeit
 electron_density=np.genfromtxt("electronDensity.csv", delimiter=",")
 
 #scipy sims
-
 class Point:
     def __init__(self, x, y):
         self.x=x
@@ -223,9 +222,9 @@ class FEM:
         for r in range(self.M-1):
             for c in range(self.N-1):
                 if(self.electronDensityList is None):
-                    temp[c+r*(self.N-1)]=self.getIntegral(Point(r,c))*0.5
+                    temp[c+r*(self.N-1)]=self.getIntegral(Point(r,c))
                 else:
-                    temp[c+r*(self.N-1)]=self.getIntegralApprox(Point(r,c))*0.5
+                    temp[c+r*(self.N-1)]=self.getIntegralApprox(Point(r,c))
         return temp;
                 
     def area(self):
@@ -266,12 +265,48 @@ class FEM:
         temp=np.delete(temp, flagged, axis=1)
         temp=np.delete(temp, flagged, axis=0)
         return temp*self.deltaX*self.deltaY/2
+    
+    def constructMatrixSparse(self):
+        temp=np.zeros(((self.N+1)*(self.M+1),(self.N+1)*(self.M+1)));
+        flagged=self.generateFlagged(self.N+1)
+        for m in range(self.M+1):
+            for n in range(self.N+1):                
+                
+                currRow=m*(self.N+1)+n
+                index1=self.get1DIndex(m, n-1, self.N+1);
+                index2=self.get1DIndex(m+1,n, self.N+1)
+                index3=self.get1DIndex(m,n+1, self.N+1)
+                index4=self.get1DIndex(m-1,n, self.N+1)
+                index5=self.get1DIndex(m,n, self.N+1)
+                #print("row, ", currRow)
+                if(index1 in range((self.N+1)*(self.M+1))):
+                    temp[currRow,index1]=(-1/self.deltaX**2)*2
+                if(index2 in range((self.N+1)*(self.M+1))):
+                    temp[currRow,index2]=(-1/self.deltaY**2)*2
+                if(index3 in range((self.N+1)*(self.M+1))):
+                    temp[currRow,index3]=(-1/(self.deltaX)**2)*2
+                if(index4 in range((self.N+1)*(self.M+1))):
+                    temp[currRow,index4]=(-1/self.deltaY**2)*2
+                if(index5 in range((self.N+1)*(self.M+1))):
+                    #print("index, ",(currRow,index5))
+                    temp[currRow,index5]=4*(1/(self.deltaX)**2+1/self.deltaY**2)
+        temp=np.delete(temp, flagged, axis=1)
+        temp=np.delete(temp, flagged, axis=0)
+        return sparse.csr_matrix(temp*self.deltaX*self.deltaY/2)
 
     def solveSystem(self):
         b=self.constructBVector();
         b=b+self.addBoundaryConditions(b, self.M-1, self.N-1)
         M=self.constructMatrix();
         sols=linalg.solve(M, b);
+        self.sols=sols
+        return self.extractSols(sols);
+    
+    def solveSystemSparse(self):
+        b=self.constructBVector();
+        b=b+self.addBoundaryConditions(b, self.M-1, self.N-1)
+        M=self.constructMatrixSparse();
+        sols=sparse.linalg.spsolve(M, b);
         self.sols=sols
         return self.extractSols(sols);
     
@@ -450,6 +485,36 @@ class FEM:
         ax.scatter(xs,ys,function, facecolors=new_img);
         plt.savefig("3dplot, N: "+str(self.N)+", M: "+str(self.M)+".png")
         
+    
+    def graphResultsSparse(self):
+        plt.clf();
+        sols=self.solveSystemSparse()
+        graphData=self.turnIntoGraphable(sols)
+        xs = graphData[0][:,0]
+        ys = graphData[0][:,1]
+        
+
+        function=graphData[1]
+
+        fig = plt.figure()
+        ax = plt.axes(projection='3d')
+
+        function.shape = (self.M+1, self.N+1)
+
+        ls = LightSource(azdeg=0, altdeg=65)
+        rgb = ls.shade(function, plt.cm.RdYlBu)
+
+        function.shape=((self.M+1)*(self.N+1),)
+
+        new_img = rgb.transpose((2, 0, 1))
+        # Dimensions: [3, m, n]
+        new_img = rgb.reshape(rgb.shape[0]*rgb.shape[1], rgb.shape[2])
+
+        # Create the SCATTER() plot 
+        ax.scatter(xs,ys,function, facecolors=new_img);
+        plt.savefig("3dplot, N: "+str(self.N)+", M: "+str(self.M)+".png")
+        
+        
     def graphSlice(self, n, func):
         plt.clf();
         fsols=finiteElement.extractSols(self.sols)
@@ -460,6 +525,27 @@ class FEM:
         plt.scatter(xy[0][n,:], fsols[n,:],s=10)
         plt.scatter(xy[0][n,:],theys, s=10,c="orange")
         plt.savefig("2dplot, N: "+str(self.N)+", M: "+str(self.M)+", y: "+str(y)+".png")
+        
+    def graphSliceError(self, n, func):
+        plt.clf();
+        fsols=finiteElement.extractSols(self.sols)
+        xy=finiteElement.getXYCoords()
+        y=xy[1][(n),:][0]
+        ys=(fsols[(n)*N+c] for c in range(N+1))
+        theys=[func(x, y) for x in xy[0][(n),:]]
+        plt.scatter(xy[0][n,:],np.abs(theys-fsols[n,:]), s=10,c="orange")
+        plt.savefig("2dplot error, N: "+str(self.N)+", M: "+str(self.M)+", y: "+str(y)+".png")
+        
+    def graphSliceErrorRatio(self, n, func):
+        plt.clf();
+        fsols=finiteElement.extractSols(self.sols)
+        xy=finiteElement.getXYCoords()
+        y=xy[1][(n),:][0]
+        ys=(fsols[(n)*N+c] for c in range(N+1))
+        theys=[func(x, y) for x in xy[0][(n),:]]
+        plt.scatter(xy[0][n,:],np.abs(theys/fsols[n,:]), s=10,c="orange")
+        plt.savefig("2dplot error, N: "+str(self.N)+", M: "+str(self.M)+", y: "+str(y)+".png")
+        
         
     def graphSlice2(self, n, func):
         plt.clf();
@@ -561,6 +647,7 @@ class Test:
         r=np.sqrt(x**2+y**2)
         return (1/(4*np.pi*eps*a**2))*(a**2/(np.sqrt(x**2+y**2))-(a**2/(np.sqrt(x**2+y**2))-a)*np.exp(-2*(np.sqrt(x**2+y**2))/a)) if r>0 else (1/(4*np.pi*eps*a**2))*(-a**2/(np.sqrt(x**2+y**2))-(-a**2/np.sqrt(x**2+y**2)-a)*np.exp(2*np.sqrt(x**2+y**2)/a))
 
+
 eps=1
 
 minX=-5
@@ -568,8 +655,8 @@ maxX=5
 minY=-5
 maxY=5
 
-N=200
-M=200
+N=300
+M=300
 sigma=1
 a=1
 
@@ -586,6 +673,6 @@ def electronDensity_hydrogen1s(x,y):
 #self, N, M, minX, maxX, minY, maxY, electronDensity, eps, boundaryCondition
 finiteElement=FEM(N, M, minX, maxX, minY, maxY, electronDensity, eps, boundaryCondition,electron_density)
 
-finiteElement.graphResults()
+finiteElement.graphResultsSparse()
 finiteElement.graphSlice(M//2, Test.erf_solution)
 finiteElement.graphSlice(M-1, Test.erf_solution)
